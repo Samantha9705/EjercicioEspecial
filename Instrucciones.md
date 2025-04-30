@@ -23,11 +23,11 @@
 
 4. Dentro del archivo **main.js** crear una función para responder al evento **click** del botón con el texto **Load Products** que se encuentra en products.html
 
-5. Dicho evento debe realizar una llamada a la siguiente API : https://fakestoreapi.com/products
+5. Dicho evento debe realizar una llamada a la siguiente API : https://api.escuelajs.co/api/v1/products
 
 6. Se debe utilizar la función **fetch** y recibir los productos como respuesta para llenar las 9 cards dentro de la página **products.html**
 
-7. Se debe mostrar la imagen del producto, nombre, descripción y precio.
+7. Se debe mostrar la segunda imagen del producto, título, descripción y precio.
 
 8. Debes guardar los cambios en el repositorio local y posteriormente subirlos a Github (Commit No. 2)
 
