@@ -9,48 +9,35 @@
 // 8. Debes guardar los cambios en el repositorio local y posteriormente subirlos a Github (Commit No. 2)
 
 const loadProducts = document.getElementById("loadProducts");
-const URLApi= "https://api.escuelajs.co/api/v1/products";
-const Productos = document.getElementById("")
+const URLApi = "https://api.escuelajs.co/api/v1/products";
 
+loadProducts.addEventListener("click", async (event) => {
+  event.preventDefault();
 
+  try {
+    const response = await fetch(URLApi);
+    if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
 
-loadProducts.addEventListener ("click", function (event){
-    event.preventDefault();
-    const options = {"method" : "GET"};
+    const productos = await response.json();
+    const cards = document.querySelectorAll('.card');
 
-    fetch(URLApi, options)
-    .then((response)=>{
-        //console.log(response);
-        response.json().then((res)=>{
-         createCards(res);
-        });
+    productos.slice(0, 9).forEach((producto, index) => {
+      const card = cards[index];
+      if (card) {
+        const img = card.querySelector('.card-img-top');
+        const description = card.querySelector('.card-text');
+        const price = card.querySelector('.text-body-secondary');
+
+      
+        img.src = producto.images[1] || producto.images[0];
+        img.alt = producto.title;
         
-    })
-    .catch((err)=>{
-        main.insertAdjacentHTML("beforeend", 
-            `<div class="alert alert-danger" role="alert">
-                ${err.message}
-            </div>`)
+        description.textContent = producto.title;
+        price.textContent = `$${producto.price}`;
+      }
     });
 
-
-})
-
-console.log(loadProducts);
-
-function createCards(products){
-    Productos.innerHTML = ""; 
-    products.slice(0, 9).forEach(producto => {
-        Productos.insertAdjacentHTML("beforeend", 
-            `<div class="card m-2" style="width: 18rem;">
-                <img src="${producto.images[1]}" class="card-img-top" alt="${producto.title}">
-                <div class="card-body">
-                    <h5 class="card-title">${producto.title}</h5>
-                    <p class="card-text">${producto.description}</p>
-                    <p class="card-text">Precio: $${producto.price}</p>
-                </div>
-            </div>`
-        );
-    });
-}
-
+  } catch (error) {
+    console.error("Error cargando productos:", error.message);
+  }
+});
